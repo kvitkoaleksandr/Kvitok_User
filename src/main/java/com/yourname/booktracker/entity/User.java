@@ -57,8 +57,13 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "followers")
-    private List<User>  followers;
+    @ManyToMany
+    @JoinTable(
+            name = "subscription",
+            joinColumns = @JoinColumn(name = "followee_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id")
+    )
+    private List<User> followers;
 
     @Column(name = "followees")
     private List<User> followees;
@@ -66,6 +71,11 @@ public class User {
     @Column(name = "mentees")
     private List<User> mentees;
 
-    @Column(name = "mentors")
+    @ManyToMany
+    @JoinTable(
+            name = "mentorship",
+            joinColumns = @JoinColumn(name = "mentee_is"),
+            inverseJoinColumns = @JoinColumn(name = "mentor_is")
+    )
     private List<User> mentors;
 }
